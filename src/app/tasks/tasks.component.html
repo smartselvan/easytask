@@ -1,0 +1,25 @@
+@if(displayForm){
+<app-task-form (cancel)="onCancel()" />
+} @if(selectedUserName){
+<section id="tasks">
+  <header>
+    <h1>{{ selectedUserName }}'s Task</h1>
+    <menu>
+      <button (click)="addTask()">Add Task</button>
+    </menu>
+  </header>
+  @if(userTasks.length > 0 ){
+  <ul>
+    @for(task of userTasks; track task.id){
+    <li>
+      <app-task [task]="task" (complete)="onTaskComplete($event)" />
+    </li>
+    }
+  </ul>
+  } @else {
+  <p id="fallback">No tasks available for the selected user</p>
+  }
+</section>
+} @else {
+<p id="fallback">Select user for viewing their tasks</p>
+}
