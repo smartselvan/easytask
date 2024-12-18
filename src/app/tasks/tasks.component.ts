@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { Task } from './task/task.model';
+import { Task, TaskData } from './task/task.model';
 import { dummyTasks } from '../dummy-tasks';
 import { TaskComponent } from "./task/task.component";
 import { TaskFormComponent } from "./task-form/task-form.component";
+import { TaskService } from './task.service';
 
 
 @Component({
@@ -12,25 +13,24 @@ import { TaskFormComponent } from "./task-form/task-form.component";
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent {
-  @Input() selectedUserId?: string;
+  @Input() selectedUserId!: string;
   @Input() selectedUserName?: string;
 
-  availableTasks: Task[] = dummyTasks;
   displayForm: boolean = false;
 
-  get userTasks(){
-    return this.availableTasks.filter((task) => task.userId === this.selectedUserId);
-  }
   
-  onTaskComplete(taskId: string) {
-    this.availableTasks = this.availableTasks.filter((task) => task.id !== taskId);
+  constructor(private taskService: TaskService){}
+  
+  get userTasks(){
+    return this.taskService.getUserTasks(this.selectedUserId);
   }
   
   addTask() {
     this.displayForm = true;
   }
   
-  onCancel() {
+  onClose() {
     this.displayForm = false;
   }
+    
 }

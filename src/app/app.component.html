@@ -1,5 +1,5 @@
 <app-header />
 <main>
   <app-users (userSelect)="onUserSelect($event)"/>
-  <app-tasks [selectedUserId]="selectedUser?.id" [selectedUserName]="selectedUser?.name"/>
+  <app-tasks [selectedUserId]="selectedUser? selectedUser.id: ''" [selectedUserName]="selectedUser?selectedUser.name:''"/>
 </main>

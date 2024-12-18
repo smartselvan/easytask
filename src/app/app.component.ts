@@ -11,7 +11,7 @@ import { User } from './users/user/user.model';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  selectedUser?: User;
+  selectedUser: User | undefined;
 
   onUserSelect(user: User) {
     this.selectedUser = user;

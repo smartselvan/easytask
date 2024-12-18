@@ -1,5 +1,5 @@
 @if(displayForm){
-<app-task-form (cancel)="onCancel()" />
+<app-task-form (close)="onClose()"  [userId]="selectedUserId" />
 } @if(selectedUserName){
 <section id="tasks">
   <header>
@@ -12,7 +12,7 @@
   <ul>
     @for(task of userTasks; track task.id){
     <li>
-      <app-task [task]="task" (complete)="onTaskComplete($event)" />
+      <app-task [task]="task"/>
     </li>
     }
   </ul>

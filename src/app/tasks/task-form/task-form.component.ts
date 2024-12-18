@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TaskData } from '../task/task.model';
+import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-task-form',
@@ -8,13 +10,26 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './task-form.component.css'
 })
 export class TaskFormComponent {
-  @Output() cancel = new EventEmitter<void>();
+  @Input() userId!: string;
+  @Output() close = new EventEmitter<void>();
+  @Output() add = new EventEmitter<TaskData>();
+
+  constructor(private taskService:TaskService){  }
 
   title: string = '';
   summary: string = '';
   dueDate: string = '';
 
   onCancel() {
-    this.cancel.emit();
+    this.close.emit();
+  }
+  
+  onSubmit() {
+    this.taskService.addUserTasks({
+      title: this.title,
+      summary: this.summary,
+      dueDate: this.dueDate
+    }, this.userId)
+    this.close.emit()
   }
 }
